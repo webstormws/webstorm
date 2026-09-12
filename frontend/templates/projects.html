@@ -1,11 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uz">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ settings.site_name }} - Barcha Loyihalar</title>
-    <meta name="description" content="{{ settings.site_name }} tomonidan yaratilgan barcha loyihalar.">
+    <title>{{ settings.site_name }} - Barcha Loyihalar | IT Kompaniya | webstorm.uz</title>
+    <meta name="description" content="{{ settings.site_name }} IT kompaniyasi (webstorm.uz) tomonidan yaratilgan barcha web sayt va loyihalar. Veb dasturlash, IT xizmatlar.">
+    <meta name="keywords" content="Web Storm, webstorm, webstorm.uz, IT kompaniya, IT company, loyihalar, web sayt, veb dasturlash, portfolio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.webstorm.uz/loyihalar/">
+    <link rel="icon" type="image/png" href="{% static 'logo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'logo.png' %}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ settings.site_name }} - IT Kompaniya">
+    <meta property="og:title" content="{{ settings.site_name }} - Barcha Loyihalar | webstorm.uz">
+    <meta property="og:url" content="https://www.webstorm.uz/loyihalar/">
+    <meta property="og:image" content="https://www.webstorm.uz/static/logo.png">
+    <meta property="og:locale" content="uz_UZ">
+    <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,14 +74,11 @@
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="{% url 'base' %}" class="flex items-center gap-3">
-                {% if settings.logo_image %}
-                <img src="{{ settings.logo_image.url }}" alt="{{ settings.site_name }}" class="w-10 h-10 rounded-xl object-cover shadow-lg shadow-brand-500/30">
-                {% else %}
-                <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-brand-500/30">{{ settings.site_name|slice:":1" }}</div>
-                {% endif %}
+                <img src="{% static 'logo.png' %}" alt="{{ settings.site_name }}"
+                    class="w-10 h-10 rounded-xl object-cover shadow-lg shadow-brand-500/30">
                 <div>
                     <span class="text-xl font-bold tracking-tight text-gray-900 block leading-none">{{ settings.site_name }}</span>
-                    <span class="text-[10px] uppercase tracking-widest font-semibold text-brand-600">{{ settings.site_tagline }}</span>
+                    <span class="text-[10px] uppercase tracking-widest font-semibold text-brand-600">webstorm.uz · {{ settings.site_tagline }}</span>
                 </div>
             </a>
             <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-gray-600">

@@ -1,11 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uz">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ settings.site_name }} - Raqamli Yechimlar</title>
-    <meta name="description" content="{{ settings.site_name }} — global bizneslar uchun innovatsion dasturiy ta'minot, web va mobil yechimlar taqdim etuvchi yangi avlod IT kompaniyasi.">
+    <title>{{ settings.site_name }} - IT Kompaniya | Web Sayt Yaratish va Veb Dasturlash | webstorm.uz</title>
+    <meta name="description" content="{{ settings.site_name }} (WebStorm.uz) — yetakchi IT kompaniya. Web sayt yaratish, veb dasturlash, mobil ilovalar, CRM/ERP, Telegram botlar va IT xizmatlar. Dominican webstorm.uz / www.webstorm.uz.">
+    <meta name="keywords" content="Web Storm, webstorm, WebStorm, webstorm.uz, www.webstorm.uz, IT company, IT kompaniya, web sayt yaratish, veb dasturlash, web development, IT xizmatlar, mobil ilova, Telegram bot, CRM, Toshkent">
+    <meta name="author" content="{{ settings.site_name }} IT Kompaniya">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.webstorm.uz/">
+    <link rel="icon" type="image/png" href="{% static 'logo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'logo.png' %}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ settings.site_name }} - IT Kompaniya">
+    <meta property="og:title" content="{{ settings.site_name }} - IT Kompaniya | Web Sayt Yaratish">
+    <meta property="og:description" content="{{ settings.site_name }} IT kompaniyasi - web sayt, mobil ilova, veb dasturlash va IT yechimlar. webstorm.uz (www.webstorm.uz)">
+    <meta property="og:url" content="https://www.webstorm.uz/">
+    <meta property="og:image" content="https://www.webstorm.uz/static/logo.png">
+    <meta property="og:locale" content="uz_UZ">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ settings.site_name }} - IT Kompaniya">
+    <meta name="twitter:description" content="{{ settings.site_name }} IT kompaniyasi | webstorm.uz - Web sayt yaratish, IT xizmatlar">
+    <meta name="twitter:image" content="https://www.webstorm.uz/static/logo.png">
+    <meta name="geo.region" content="UZ">
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter -->
@@ -257,18 +276,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Logo -->
             <a href="#home" class="flex items-center gap-3">
-                {% if settings.logo_image %}
-                <img src="{{ settings.logo_image.url }}" alt="{{ settings.site_name }}"
+                <img src="{% static 'logo.png' %}" alt="{{ settings.site_name }} - IT Kompaniya"
                     class="w-10 h-10 rounded-xl object-cover shadow-lg shadow-brand-500/30">
-                {% else %}
-                <div
-                    class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-brand-500/30">
-                    {{ settings.site_name|slice:":1" }}
-                </div>
-                {% endif %}
                 <div>
                     <span class="text-xl font-bold tracking-tight text-gray-900 block leading-none">{{ settings.site_name }}</span>
-                    <span class="text-[10px] uppercase tracking-widest font-semibold text-brand-600">{{ settings.site_tagline }}</span>
+                    <span class="text-[10px] uppercase tracking-widest font-semibold text-brand-600">webstorm.uz · {{ settings.site_tagline }}</span>
                 </div>
             </a>
 
@@ -305,14 +317,8 @@
             class="lg:hidden fixed top-0 right-0 h-full w-[78%] max-w-sm bg-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl border-l border-gray-100">
             <div class="p-6 pt-24 flex flex-col h-full">
                 <div class="flex items-center gap-3 mb-8">
-                    {% if settings.logo_image %}
-                    <img src="{{ settings.logo_image.url }}" alt="{{ settings.site_name }}"
+                    <img src="{% static 'logo.png' %}" alt="{{ settings.site_name }}"
                         class="w-9 h-9 rounded-xl object-cover shadow-lg shadow-brand-500/30">
-                    {% else %}
-                    <div class="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center text-white text-xl font-black">
-                        {{ settings.site_name|slice:":1" }}
-                    </div>
-                    {% endif %}
                     <span class="text-lg font-bold tracking-tight text-gray-900">{{ settings.site_name }}</span>
                 </div>
                 <nav class="flex flex-col gap-1 text-base font-medium text-gray-700">
@@ -1328,15 +1334,8 @@
                 <!-- Col 1: Brand -->
                 <div class="col-span-2 md:col-span-2 space-y-4">
                     <div class="flex items-center gap-3">
-                        {% if settings.logo_image %}
-                        <img src="{{ settings.logo_image.url }}" alt="{{ settings.site_name }}"
+                        <img src="{% static 'logo.png' %}" alt="{{ settings.site_name }}"
                             class="w-9 h-9 rounded-xl object-cover shadow-lg shadow-brand-500/30">
-                        {% else %}
-                        <div
-                            class="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center text-white text-xl font-black">
-                            {{ settings.site_name|slice:":1" }}
-                        </div>
-                        {% endif %}
                         <span class="text-xl font-bold tracking-tight">{{ settings.site_name }}</span>
                     </div>
                     <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
@@ -1401,6 +1400,10 @@
                         <li class="flex items-start gap-2">
                             <i class="fa-solid fa-clock text-brand-500 mt-0.5"></i>
                             <span>{{ settings.working_hours }}</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-globe text-brand-500 mt-0.5"></i>
+                            <span>www.webstorm.uz</span>
                         </li>
                     </ul>
                 </div>

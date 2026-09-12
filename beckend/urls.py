@@ -8,6 +8,7 @@ from django.views.static import serve as static_serve
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('panel/', include('dashboard.urls')),
+    path('', include('bot.urls')),
     path('', include('frontend.urls') )
 ]
 
