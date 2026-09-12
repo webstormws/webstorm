@@ -19,7 +19,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-producti
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS',
-    'webstorm.uz,www.webstorm.uz,.up.railway.app,localhost,127.0.0.1'
+    'webstorm.uz,www.webstorm.uz,.up.railway.app,.railway.app,.railway.internal,localhost,127.0.0.1'
 ).split(',')
 
 CSRF_TRUSTED_ORIGINS = [
