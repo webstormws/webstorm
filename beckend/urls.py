@@ -1,17 +1,24 @@
 
 from django.contrib import admin
-from django.urls import path , include
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import FileResponse, Http404
 from django.views.static import serve as static_serve
+
+
+def google_verify(request, token):
+    """Google Search Console verifikatsiya fayllarini (google*.html) ildizdan xizmat qiladi."""
+    path = settings.BASE_DIR / 'static' / f'google{token}.html'
+    if not path.exists():
+        raise Http404
+    return FileResponse(open(path, 'rb'), content_type='text/html')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('panel/', include('dashboard.urls')),
-    path('googlee7d19afb2238cb03.html', static_serve, {
-        'path': 'googlee7d19afb2238cb03.html',
-        'document_root': settings.BASE_DIR / 'static',
-    }),
+    path('google<str:token>.html', google_verify),
     path('', include('bot.urls')),
     path('', include('frontend.urls') )
 ]
