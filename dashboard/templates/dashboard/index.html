@@ -1,0 +1,99 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Stats -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="text-2xl font-extrabold text-gray-900">{{ stats.users }}</div>
+        <div class="text-xs text-gray-400 mt-1">Foydalanuvchilar</div>
+    </div>
+    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="text-2xl font-extrabold text-indigo-600">{{ stats.services }}</div>
+        <div class="text-xs text-gray-400 mt-1">Xizmatlar</div>
+    </div>
+    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="text-2xl font-extrabold text-amber-600">{{ stats.orders }}</div>
+        <div class="text-xs text-gray-400 mt-1">Buyurtmalar</div>
+    </div>
+    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="text-2xl font-extrabold text-red-600">{{ stats.new_orders }}</div>
+        <div class="text-xs text-gray-400 mt-1">Yangi buyurtmalar</div>
+    </div>
+</div>
+
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="text-2xl font-extrabold text-gray-900">{{ stats.portfolio }}</div>
+        <div class="text-xs text-gray-400 mt-1">Portfolio</div>
+    </div>
+    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="text-2xl font-extrabold text-gray-900">{{ stats.websites }}</div>
+        <div class="text-xs text-gray-400 mt-1">Web saytlar</div>
+    </div>
+    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="text-2xl font-extrabold text-gray-900">{{ stats.faqs }}</div>
+        <div class="text-xs text-gray-400 mt-1">Savol-javoblar</div>
+    </div>
+    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="text-2xl font-extrabold text-emerald-600">{{ stats.active_users }}</div>
+        <div class="text-xs text-gray-400 mt-1">Faol foydalanuvchilar</div>
+    </div>
+</div>
+
+<div class="grid lg:grid-cols-2 gap-6">
+    <!-- Recent Orders -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-bold text-gray-900 text-sm">So'nggi buyurtmalar</h3>
+            <a href="{% url 'dashboard:orders' %}" class="text-xs text-indigo-600 hover:text-indigo-700 font-medium">Hammasi</a>
+        </div>
+        <div class="divide-y divide-gray-50">
+            {% for order in recent_orders %}
+            <a href="{% url 'dashboard:order_detail' order.pk %}" class="block p-4 hover:bg-gray-50 transition">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-sm font-semibold text-gray-900">{{ order.name }}</div>
+                        <div class="text-xs text-gray-400">{{ order.service }} &middot; {{ order.created_at|date:"d.m.Y H:i" }}</div>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase px-2 py-1 rounded-full
+                        {% if order.status == 'new' %}bg-red-100 text-red-600
+                        {% elif order.status == 'completed' %}bg-emerald-100 text-emerald-600
+                        {% elif order.status == 'cancelled' %}bg-gray-100 text-gray-500
+                        {% else %}bg-amber-100 text-amber-600{% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                </div>
+            </a>
+            {% empty %}
+            <div class="p-6 text-center text-gray-400 text-xs">Hozircha buyurtmalar yo'q</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recent Users -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-bold text-gray-900 text-sm">So'nggi foydalanuvchilar</h3>
+            <a href="{% url 'dashboard:users' %}" class="text-xs text-indigo-600 hover:text-indigo-700 font-medium">Hammasi</a>
+        </div>
+        <div class="divide-y divide-gray-50">
+            {% for u in recent_users %}
+            <a href="{% url 'dashboard:user_detail' u.pk %}" class="block p-4 hover:bg-gray-50 transition">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs font-bold">{{ u.first_name|first|upper }}</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-sm font-semibold text-gray-900">{{ u.first_name }} {{ u.last_name }}</div>
+                        <div class="text-xs text-gray-400">{% if u.username %}@{{ u.username }}{% else %}ID: {{ u.telegram_id }}{% endif %}</div>
+                    </div>
+                    <div class="text-[10px] text-gray-400">{{ u.first_seen|date:"d.m" }}</div>
+                </div>
+            </a>
+            {% empty %}
+            <div class="p-6 text-center text-gray-400 text-xs">Hozircha foydalanuvchilar yo'q</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

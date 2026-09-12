@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Panel{% endblock %} — Web Storm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar-link.active { background: rgba(99,102,241,0.15); color: #6366f1; font-weight: 600; }
+        .toast { animation: slideIn 0.3s ease, fadeOut 0.3s ease 3.7s forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 min-h-screen fixed top-0 left-0 z-30 flex flex-col">
+        <div class="p-5 border-b border-gray-100">
+            <a href="{% url 'dashboard:index' %}" class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center text-white font-bold text-sm">W</div>
+                <div>
+                    <div class="font-bold text-gray-900 text-sm">Web Storm</div>
+                    <div class="text-[10px] text-gray-400 uppercase tracking-wider">Admin Panel</div>
+                </div>
+            </a>
+        </div>
+        <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+            <a href="{% url 'dashboard:index' %}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition {% if page == 'dashboard' %}active{% endif %}">
+                <span class="text-lg">&#128202;</span> Dashboard
+            </a>
+            <a href="{% url 'dashboard:services' %}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition {% if page == 'services' %}active{% endif %}">
+                <span class="text-lg">&#128188;</span> Xizmatlar
+            </a>
+            <a href="{% url 'dashboard:portfolio' %}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition {% if page == 'portfolio' %}active{% endif %}">
+                <span class="text-lg">&#128193;</span> Portfolio
+            </a>
+            <a href="{% url 'dashboard:websites' %}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition {% if page == 'websites' %}active{% endif %}">
+                <span class="text-lg">&#127760;</span> Web saytlar
+            </a>
+            <a href="{% url 'dashboard:faq' %}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition {% if page == 'faq' %}active{% endif %}">
+                <span class="text-lg">&#10067;</span> Savol-javob
+            </a>
+            <a href="{% url 'dashboard:orders' %}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition {% if page == 'orders' %}active{% endif %}">
+                <span class="text-lg">&#128233;</span> Buyurtmalar
+                {% if stats.new_orders %}<span class="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">{{ stats.new_orders }}</span>{% endif %}
+            </a>
+            <a href="{% url 'dashboard:users' %}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition {% if page == 'users' %}active{% endif %}">
+                <span class="text-lg">&#128100;</span> Foydalanuvchilar
+            </a>
+            <div class="border-t border-gray-100 my-2"></div>
+            <a href="{% url 'dashboard:settings' %}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition {% if page == 'settings' %}active{% endif %}">
+                <span class="text-lg">&#9881;</span> Sozlamalar
+            </a>
+        </nav>
+        <div class="p-3 border-t border-gray-100">
+            <div class="flex items-center gap-3 px-3 py-2">
+                <div class="w-8 h-8 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center text-xs font-bold">{{ request.user.username|first|upper }}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="text-xs font-semibold text-gray-900 truncate">{{ request.user.username }}</div>
+                    <div class="text-[10px] text-gray-400">Admin</div>
+                </div>
+                <a href="{% url 'dashboard:logout' %}" class="text-gray-400 hover:text-red-500 transition text-sm" title="Chiqish">&#x2192;</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 ml-64">
+        <!-- Top bar -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
+            <h1 class="text-lg font-bold text-gray-900">{% block page_title %}Dashboard{% endblock %}</h1>
+            <div class="flex items-center gap-4">
+                <a href="/" target="_blank" class="text-xs text-gray-400 hover:text-brand-600 transition">Saytga o'tish &#8599;</a>
+            </div>
+        </header>
+
+        <!-- Messages -->
+        {% if messages %}
+        <div class="fixed top-4 right-4 z-50 space-y-2">
+            {% for message in messages %}
+            <div class="toast bg-{% if message.tags == 'success' %}emerald-500{% elif message.tags == 'error' %}red-500{% else %}brand-500{% endif %} text-white px-4 py-3 rounded-xl shadow-lg text-sm font-medium max-w-sm">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Page content -->
+        <div class="p-6">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

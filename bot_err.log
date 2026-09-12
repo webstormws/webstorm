@@ -1,0 +1,31 @@
+INFO:bot.tg_bot:Bot polling boshlandi...
+INFO:bot.tg_bot:Bot ishga tushdi!
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @webstormuzbot id=8940852830 - 'webstorm'
+INFO:aiogram.event:Update id=248267133 is handled. Duration 382 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267134 is handled. Duration 265 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267135 is handled. Duration 259 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267136 is handled. Duration 246 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267137 is handled. Duration 391 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267138 is handled. Duration 249 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267139 is handled. Duration 256 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267140 is not handled. Duration 8 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267141 is not handled. Duration 2 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267142 is handled. Duration 246 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267143 is handled. Duration 255 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267144 is handled. Duration 249 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267145 is handled. Duration 130 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267146 is handled. Duration 137 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267147 is handled. Duration 136 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267148 is handled. Duration 151 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267149 is handled. Duration 133 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267150 is handled. Duration 138 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267151 is handled. Duration 149 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267152 is handled. Duration 702 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267153 is handled. Duration 151 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267154 is handled. Duration 253 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267155 is handled. Duration 246 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267156 is handled. Duration 251 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267157 is handled. Duration 246 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267158 is handled. Duration 241 ms by bot id=8940852830
+INFO:aiogram.event:Update id=248267159 is handled. Duration 250 ms by bot id=8940852830

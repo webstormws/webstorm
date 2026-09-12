@@ -1,0 +1,125 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-xl font-bold text-gray-900">
+            {{ user.first_name|default:"" }} {{ user.last_name|default:"" }}
+            {% if user.username %}<span class="text-gray-400 font-normal">@{{ user.username }}</span>{% endif %}
+        </h1>
+        <a href="{% url 'dashboard:users' %}"
+           class="text-xs font-medium text-gray-500 hover:text-gray-700 transition">
+            &larr; Back to users
+        </a>
+    </div>
+
+    <div class="space-y-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 class="text-sm font-bold text-gray-900 mb-4">User Information</h2>
+            <dl class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Telegram ID</dt>
+                    <dd class="text-xs font-mono font-medium text-gray-900 mt-0.5">{{ user.telegram_id }}</dd>
+                </div>
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">First Name</dt>
+                    <dd class="text-xs font-medium text-gray-900 mt-0.5">{{ user.first_name|default:"-" }}</dd>
+                </div>
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Last Name</dt>
+                    <dd class="text-xs font-medium text-gray-900 mt-0.5">{{ user.last_name|default:"-" }}</dd>
+                </div>
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Username</dt>
+                    <dd class="text-xs font-medium text-gray-900 mt-0.5">
+                        {% if user.username %}@{{ user.username }}{% else %}-{% endif %}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Phone</dt>
+                    <dd class="text-xs font-medium text-gray-900 mt-0.5">{{ user.phone|default:"-" }}</dd>
+                </div>
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Language</dt>
+                    <dd class="text-xs font-medium text-gray-900 mt-0.5">{{ user.language|default:"-" }}</dd>
+                </div>
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Status</dt>
+                    <dd class="mt-0.5">
+                        {% if user.is_active %}
+                        <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded-full">Active</span>
+                        {% else %}
+                        <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-gray-500 bg-gray-100 rounded-full">Inactive</span>
+                        {% endif %}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">First Seen</dt>
+                    <dd class="text-xs text-gray-600 mt-0.5">{{ user.first_seen|date:"d M Y, H:i" }}</dd>
+                </div>
+                <div>
+                    <dt class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Last Active</dt>
+                    <dd class="text-xs text-gray-600 mt-0.5">{{ user.last_active|date:"d M Y, H:i" }}</dd>
+                </div>
+            </dl>
+        </div>
+
+        {% if user.orders.all %}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 class="text-sm font-bold text-gray-900 mb-4">Orders ({{ user.orders.count }})</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-gray-100">
+                            <th class="pb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">#</th>
+                            <th class="pb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Service</th>
+                            <th class="pb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="pb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="pb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        {% for order in user.orders.all %}
+                        <tr class="hover:bg-gray-50/50 transition">
+                            <td class="py-2.5">
+                                <span class="text-xs font-mono text-gray-500">#{{ order.pk }}</span>
+                            </td>
+                            <td class="py-2.5">
+                                <p class="text-xs font-medium text-gray-900">{{ order.service }}</p>
+                            </td>
+                            <td class="py-2.5">
+                                {% if order.status == 'new' %}
+                                <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-red-700 bg-red-50 rounded-full">New</span>
+                                {% elif order.status == 'contacted' %}
+                                <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-amber-700 bg-amber-50 rounded-full">Contacted</span>
+                                {% elif order.status == 'negotiation' %}
+                                <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-yellow-700 bg-yellow-50 rounded-full">Negotiation</span>
+                                {% elif order.status == 'approved' %}
+                                <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-blue-700 bg-blue-50 rounded-full">Approved</span>
+                                {% elif order.status == 'in_progress' %}
+                                <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-indigo-700 bg-indigo-50 rounded-full">In Progress</span>
+                                {% elif order.status == 'completed' %}
+                                <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded-full">Completed</span>
+                                {% elif order.status == 'cancelled' %}
+                                <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold text-gray-700 bg-gray-100 rounded-full">Cancelled</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-2.5">
+                                <p class="text-[10px] text-gray-400">{{ order.created_at|date:"d M Y" }}</p>
+                            </td>
+                            <td class="py-2.5 text-right">
+                                <a href="{% url 'dashboard:order_detail' order.pk %}"
+                                   class="inline-flex items-center px-2.5 py-1 text-[10px] font-medium text-indigo-600 bg-indigo-50 rounded-xl hover:bg-indigo-100 transition">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
