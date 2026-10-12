@@ -1,0 +1,37 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Portfolio{% endblock %}
+{% block page_title %}Portfolio{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+    <p class="text-sm text-gray-400">{{ items.count }} ta loyiha</p>
+    <a href="{% url 'dashboard:portfolio_create' %}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow transition">+ Yaratish</a>
+</div>
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for item in items %}
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        {% if item.image %}
+        <img src="{{ item.image.url }}" alt="{{ item.title }}" class="w-full h-40 object-cover">
+        {% else %}
+        <div class="w-full h-40 bg-gray-100 flex items-center justify-center text-gray-300 text-3xl">&#128247;</div>
+        {% endif %}
+        <div class="p-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-gray-900 text-sm">{{ item.title }}</h3>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-600">{{ item.get_category_display }}</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-1 line-clamp-2">{{ item.description|truncatewords:15 }}</p>
+            <div class="flex items-center justify-between mt-3">
+                <span class="text-[10px] text-gray-400">{{ item.date|date:"d.m.Y" }}</span>
+                <div class="space-x-2">
+                    <a href="{% url 'dashboard:portfolio_edit' item.pk %}" class="text-xs text-gray-400 hover:text-indigo-600">Tahrirlash</a>
+                    <a href="{% url 'dashboard:portfolio_delete' item.pk %}" class="text-xs text-gray-400 hover:text-red-500">O'chirish</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full bg-white rounded-2xl border border-gray-100 p-10 text-center text-gray-400 text-sm">Portfolio yo'q</div>
+    {% endfor %}
+</div>
+{% endblock %}

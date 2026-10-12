@@ -1,0 +1,44 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Xizmatlar{% endblock %}
+{% block page_title %}Xizmatlar{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+    <p class="text-sm text-gray-400">{{ services.count }} ta xizmat</p>
+    <a href="{% url 'dashboard:service_create' %}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow transition">+ Yaratish</a>
+</div>
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <table class="w-full text-sm">
+        <thead class="bg-gray-50 border-b border-gray-100">
+            <tr>
+                <th class="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase">Icon</th>
+                <th class="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase">Nomi</th>
+                <th class="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase">Narx</th>
+                <th class="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase">Holat</th>
+                <th class="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase">Tartib</th>
+                <th class="text-right px-5 py-3 text-xs font-semibold text-gray-400 uppercase">Amallar</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+            {% for svc in services %}
+            <tr class="hover:bg-gray-50 transition">
+                <td class="px-5 py-4 text-xl">{{ svc.icon }}</td>
+                <td class="px-5 py-4 font-semibold text-gray-900">{{ svc.name }}</td>
+                <td class="px-5 py-4 text-gray-500 text-xs">{{ svc.price_info }}</td>
+                <td class="px-5 py-4">
+                    {% if svc.is_active %}<span class="text-[10px] font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-600">Faol</span>{% else %}<span class="text-[10px] font-bold px-2 py-1 rounded-full bg-gray-100 text-gray-500">Nofaol</span>{% endif %}
+                </td>
+                <td class="px-5 py-4 text-gray-400">{{ svc.order }}</td>
+                <td class="px-5 py-4 text-right space-x-2">
+                    <a href="{% url 'dashboard:packages' svc.pk %}" class="text-xs text-gray-400 hover:text-indigo-600">Paketlar</a>
+                    <a href="{% url 'dashboard:service_edit' svc.pk %}" class="text-xs text-gray-400 hover:text-indigo-600">Tahrirlash</a>
+                    <a href="{% url 'dashboard:service_delete' svc.pk %}" class="text-xs text-gray-400 hover:text-red-500">O'chirish</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="px-5 py-10 text-center text-gray-400 text-xs">Xizmatlar yo'q</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
